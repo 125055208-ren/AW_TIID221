@@ -28,6 +28,7 @@
     padding-right: 40px;
     padding-bottom: 20px;
     padding-left: 40px;
+    
 }
 </style> 
 </head>
