@@ -1,13 +1,13 @@
-# LIBRERÍAS
+
 from flask import Flask, flash, redirect, render_template, request, url_for
 from flask_mysqldb import MySQL
 
-# CREAR APLICACIÓN
+
 app = Flask(__name__)
 
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-# CONEXIÓN A MYSQL
+
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = ''
@@ -15,11 +15,10 @@ app.config['MYSQL_DB'] = 'crud_tareas'
 
 app.secret_key = 'mysecretkey'
 
-# Inicializar la conexión
+
 mysql = MySQL(app)
 
 
-# RUTA PRINCIPAL: READ
 @app.route('/')
 def index():
     con = mysql.connection.cursor()
@@ -29,7 +28,6 @@ def index():
     return render_template('index.html', listTareas=conTareas)
 
 
-# CREATE
 @app.route('/guardar', methods=['POST'])
 def guardar():
     if request.method == 'POST':
@@ -51,7 +49,7 @@ def guardar():
     return redirect(url_for('index'))
 
 
-# UPDATE: mostrar formulario con datos cargados
+
 @app.route('/editar/<int:id>')
 def editar(id):
     con = mysql.connection.cursor()
@@ -61,7 +59,7 @@ def editar(id):
     return render_template('editarTarea.html', Tarea=consultarId)
 
 
-# UPDATE: guardar cambios
+
 @app.route('/actualizar/<int:id>', methods=['POST'])
 def actualizar(id):
     if request.method == 'POST':
@@ -83,7 +81,7 @@ def actualizar(id):
     return redirect(url_for('index'))
 
 
-# DELETE: mostrar confirmación (GET) y eliminar (POST)
+
 @app.route('/eliminar/<int:id>', methods=['GET', 'POST'])
 def eliminar(id):
     con = mysql.connection.cursor()
@@ -101,6 +99,6 @@ def eliminar(id):
     return render_template('eliminarTarea.html', Tarea=consultarId)
 
 
-# EJECUTAR APLICACIÓN
+
 if __name__ == '__main__':
     app.run(debug=True)
